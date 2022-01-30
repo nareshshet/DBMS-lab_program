@@ -1,0 +1,522 @@
+CREATE TABLE DEPARTMENT (
+    DNO VARCHAR (20) PRIMARY KEY,
+    DNAME VARCHAR (20),
+    MGRSTARTDATE DATE,
+    MGRSSN VARCHAR (20)
+);
+
+CREATE TABLE EMPLOYEE (
+    SSN VARCHAR (20) PRIMARY KEY,
+    FNAME VARCHAR (20),
+    LNAME VARCHAR (20),
+    ADDRESS VARCHAR (100),
+    SEX CHAR (1),
+    SALARY INT (10),
+    SUPERSSN VARCHAR (20),
+    DNO VARCHAR (20),
+    FOREIGN KEY (SUPERSSN) REFERENCES EMPLOYEE (SSN),
+    FOREIGN KEY (DNO) REFERENCES DEPARTMENT (DNO)
+);
+
+ALTER TABLE
+    DEPARTMENT
+ADD
+    FOREIGN KEY(MGRSSN) REFERENCES EMPLOYEE(SSN);
+
+CREATE TABLE DLOCATION (
+    DLOC VARCHAR (20),
+    DNO VARCHAR (20),
+    PRIMARY KEY (DNO, DLOC),
+    FOREIGN KEY (DNO) REFERENCES DEPARTMENT (DNO)
+);
+
+CREATE TABLE PROJECT (
+    PNO INT (10) PRIMARY KEY,
+    PNAME VARCHAR (20),
+    PLOCATION VARCHAR (20),
+    DNO VARCHAR (20),
+    FOREIGN KEY (DNO) REFERENCES DEPARTMENT (DNO)
+);
+
+CREATE TABLE WORKS_ON (
+    HOURS INT (4),
+    SSN VARCHAR (20),
+    PNO INT (10),
+    PRIMARY KEY (SSN, PNO),
+    FOREIGN KEY (SSN) REFERENCES EMPLOYEE (SSN),
+    FOREIGN KEY (PNO) REFERENCES PROJECT (PNO)
+);
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVEECE01',
+        'JOHN',
+        'SCOTT',
+        'BANGALORE',
+        'M',
+        450000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE01',
+        'JAMES',
+        'SMITH',
+        'BANGALORE',
+        'M',
+        500000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE02',
+        'HEARN',
+        'BAKER',
+        'BANGALORE',
+        'M',
+        700000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE03',
+        'EDWARD',
+        'SCOTT',
+        'MYSORE',
+        'M',
+        500000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE04',
+        'PAVAN',
+        'HEGDE',
+        'MANGALORE',
+        'M',
+        650000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE05',
+        'GIRISH',
+        'MALYA',
+        'MYSORE',
+        'M',
+        450000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVECSE06',
+        'NEHA',
+        'SN',
+        'BANGALORE',
+        'F',
+        800000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVEACC01',
+        'AHANA',
+        'K',
+        'MANGALORE',
+        'F',
+        350000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVEACC02',
+        'SANTHOSH',
+        'KUMAR',
+        'MANGALORE',
+        'M',
+        300000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVEISE01',
+        'VEENA',
+        'M',
+        'MYSORE',
+        'F',
+        600000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    EMPLOYEE
+VALUES
+    (
+        'RVEIT01',
+        'NAGESH',
+        'HR',
+        'BANGALORE',
+        'M',
+        500000,
+        NULL,
+        NULL
+    );
+
+INSERT INTO
+    DEPARTMENT
+VALUES
+    ('1', 'ACCOUNTS', '2001-01-01', 'RVEACC02');
+
+INSERT INTO
+    DEPARTMENT
+VALUES
+    ('2', 'IT', '2016-08-01', 'RVEIT01');
+
+INSERT INTO
+    DEPARTMENT
+VALUES
+    ('3', 'ECE', '2008-6-01', 'RVEECE01');
+
+INSERT INTO
+    DEPARTMENT
+VALUES
+    ('4', 'ISE', '2015-06-01', 'RVEISE01');
+
+INSERT INTO
+    DEPARTMENT
+VALUES
+    ('5', 'CSE', '2002-06-01', 'RVECSE05');
+
+UPDATE
+    EMPLOYEE
+SET
+    SUPERSSN = ’ RVECSE02 ’,
+    DNO = ’ 5 ’
+WHERE
+    SSN = ’ RVECSE01 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    SUPERSSN = ’ RVECSE03 ’,
+    DNO = ’ 5 ’
+WHERE
+    SSN = ’ RVECSE02 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    SUPERSSN = ’ RVECSE04 ’,
+    DNO = ’ 5 ’
+WHERE
+    SSN = ’ RVECSE03 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 5 ’,
+    SUPERSSN = ’ RVECSE05 ’
+WHERE
+    SSN = ’ RVECSE04 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 5 ’,
+    SUPERSSN = ’ RVECSE06 ’
+WHERE
+    SSN = ’ RVECSE05 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 5 ’,
+    SUPERSSN = NULL
+WHERE
+    SSN = ’ RVECSE06 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 1 ’,
+    SUPERSSN = ’ RVEACC02 ’
+WHERE
+    SSN = ’ RVEACC01 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 1 ’,
+    SUPERSSN = NULL WHERESSN = ’ RVEACC02 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 4 ’,
+    SUPERSSN = NULL WHERESSN = ’ RVEISE01 ’;
+
+UPDATE
+    EMPLOYEE
+SET
+    DNO = ’ 2 ’,
+    SUPERSSN = NULL
+WHERE
+    SSN = ’ RVEIT01 ’;
+
+INSERT INTO
+    DLOCATION
+VALUES
+    ('BANGALORE', '1');
+
+INSERT INTO
+    DLOCATION
+VALUES
+    ('BANGALORE', '2');
+
+INSERT INTO
+    DLOCATION
+VALUES
+    ('BANGALORE', '3');
+
+INSERT INTO
+    DLOCATION
+VALUES
+    ('MANGALORE', '4');
+
+INSERT INTO
+    DLOCATION
+VALUES
+    ('MANGALORE', '5');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (100, 'IOT', 'BANGALORE', '5');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (101, 'CLOUD', 'BANGALORE', '5');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (102, 'BIGDATA', 'BANGALORE', '5');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (103, 'SENSORS', 'BANGALORE', '3');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (104, 'BANK MANAGEMENT', 'BANGALORE', '1');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (105, 'SALARY MANAGEMENT', 'BANGALORE', '1');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (106, 'OPENSTACK', 'BANGALORE', '4');
+
+INSERT INTO
+    PROJECT
+VALUES
+    (107, 'SMART CITY', 'BANGALORE', '2');
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (4, 'RVECSE01', 100);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (6, 'RVECSE01', 101);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (8, 'RVECSE01', 102);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (10, 'RVECSE02', 100);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (3, ‘ RVECSE04 ’, 100);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (4, 'RVECSE05', 101);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (5, 'RVECSE06', 102);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (6, 'RVECSE03', 102);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (7, 'RVEECE01', 103);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (5, 'RVEACC01', 104);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (6, 'RVEACC02', 105);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (4, 'RVEISE01', 106);
+
+INSERT INTO
+    WORKS_ON
+VALUES
+    (10, 'RVEIT01', 107);
+
+SELECT
+    W.PNO
+FROM
+    EMPLOYEE E,
+    WORKS_ON W
+WHERE
+    E.SSN = W.SSN
+    AND E.LNAME = 'SCOTT'
+UNION
+SELECT
+    P.PNO
+FROM
+    EMPLOYEE E,
+    DEPARTMENT D,
+    PROJECT P
+WHERE
+    D.DNO = P.DNO
+    AND E.SSN = D.MGRSSN
+    AND E.LNAME = 'SCOTT'
+SELECT
+    E.FNAME,
+    E.LNAME,
+    1.1 * E.SALARY AS INCR_SAL
+FROM
+    EMPLOYEE E,
+    WORKS_ON W,
+    PROJECT P
+WHERE
+    E.SSN = W.SSN
+    AND W.PNO = P.PNO
+    AND P.PNAME = ’ IOT ’;
+
+SELECT
+    SUM (E.SALARY),
+    MAX (E.SALARY),
+    MIN (E.SALARY),
+    AVG (E.SALARY)
+FROM
+    EMPLOYEE E,
+    DEPARTMENT D
+WHERE
+    E.DNO = D.DNO
+    AND D.DNAME = ’ ACCOUNTS ’;
+
+SELECT
+    E.FNAME,
+    E.LNAME
+FROM
+    EMPLOYEE E
+WHERE
+    NOT EXISTS (
+        SELECT
+            PNO
+        FROM
+            PROJECT P
+        WHERE
+            DNO = 5
+            AND PNO NOT IN (
+                SELECT
+                    PNO
+                FROM
+                    WORKS_ON W
+                WHERE
+                    E.SSN = SSN
+            )
+    );
+
+SELECT
+    D.DNO,
+    COUNT (*)
+FROM
+    DEPARTMENT D,
+    EMPLOYEE E
+WHERE
+    D.DNO = E.DNO
+    AND E.SALARY > 600000
+    AND D.DNO IN (
+        SELECT
+            E1.DNO
+        FROM
+            EMPLOYEE E1
+        GROUP BY
+            E1.DNO
+        HAVING
+            COUNT (*) > 5
+    )
+GROUP BY
+    D.DNO;
